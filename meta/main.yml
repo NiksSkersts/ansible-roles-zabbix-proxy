@@ -20,4 +20,4 @@ galaxy_info:
     - monitoring
     - proxy
 dependencies:
-  - role: zabbix-release
+  - role: zabbix_release
