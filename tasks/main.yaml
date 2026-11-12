@@ -1,0 +1,10 @@
+---
+
+- name: Validation stage
+  ansible.builtin.import_tasks: validation.yaml
+
+- name: Install Zabbix proxy
+  ansible.builtin.import_tasks: install_proxy.yaml
+
+- name: Configure zabbix proxy.
+  ansible.builtin.import_tasks: configure_proxy.yaml

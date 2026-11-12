@@ -1,0 +1,47 @@
+---
+- name: Deploy PSK
+  no_log: true
+  notify: Restart Zabbix proxy
+  ansible.builtin.copy:
+    content: '{{ zabbix_agent_tlspsk_secret }}'
+    dest: '{{ zabbix_agent_tlspskfile }}'
+    owner: root
+    group: zabbix
+    mode: '0640'
+
+- name: Deploy Zabbix proxy config
+  notify: Restart Zabbix proxy
+  ansible.builtin.template:
+    src: zabbix_proxy_custom.conf.j2
+    dest: /etc/zabbix/zabbix_proxy_custom.conf
+    owner: root
+    group: zabbix
+    mode: '0640'
+
+- name: Deploy Zabbix proxy systemd service
+  notify:
+    - Reload systemd
+    - Restart Zabbix proxy
+  ansible.builtin.copy:
+    content: |
+      [Unit]
+      Description=Zabbix Proxy (SQLite3)
+      Documentation=man:zabbix_proxy
+      After=network.target
+
+      [Service]
+      Type=simple
+      User=zabbix
+      Group=zabbix
+      RuntimeDirectory=zabbix
+      RuntimeDirectoryMode=0750
+      RuntimeDirectoryPreserve=yes
+      ExecStart=/usr/sbin/zabbix_proxy --foreground --config /etc/zabbix/zabbix_proxy_custom.conf
+      Restart=on-abnormal
+
+      [Install]
+      WantedBy=multi-user.target
+    dest: /etc/systemd/system/zabbix-proxy.service
+    owner: root
+    group: root
+    mode: '0644'

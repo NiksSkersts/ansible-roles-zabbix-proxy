@@ -1,0 +1,42 @@
+---
+- name: Gather installed package facts
+  ansible.builtin.package_facts:
+    manager: auto
+  tags:
+    - packages
+
+- name: Assert package is installed
+  loop:
+    - zabbix-release
+  ansible.builtin.assert:
+    that:
+      - item in ansible_facts.packages
+    fail_msg: "Package {{ item }} is not installed"
+    success_msg: "{{ item }} is installed"
+
+- name: Validate Zabbix proxy endpoint.
+  become: false
+  tags: always
+  ansible.builtin.assert:
+    that:
+      - zabbix_monitor_endpoint is defined
+      - zabbix_monitor_endpoint is string
+      - zabbix_monitor_endpoint | length > 0
+    fail_msg: Set the Zabbix server endpoint.
+
+- name: Validate Zabbix proxy PSK
+  become: false
+  tags: always
+  no_log: true
+  fail_msg: Set the Zabbix proxy PSK secret, absolute PSK file path, and PSK identity.
+  ansible.builtin.assert:
+    that:
+      - zabbix_agent_tlspsk_secret is defined
+      - zabbix_agent_tlspsk_secret is string
+      - zabbix_agent_tlspsk_secret is match('^(?:[0-9a-fA-F]{2}){16,256}$')
+      - zabbix_agent_tlspskfile is defined
+      - zabbix_agent_tlspskfile is string
+      - zabbix_agent_tlspskfile is match('^/.*[^/]$')
+      - zabbix_agent_tlspskidentity is defined
+      - zabbix_agent_tlspskidentity is string
+      - zabbix_agent_tlspskidentity | length > 0

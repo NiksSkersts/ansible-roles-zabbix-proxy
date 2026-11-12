@@ -1,0 +1,15 @@
+---
+zabbix_monitor_endpoint: 127.0.0.1
+zabbix_agent_tlspsk_secret: ''
+zabbix_proxy_tlspskfile: /etc/zabbix/zabbix_proxy.psk
+zabbix_proxy_tlspskidentity: zabbix-proxy
+zabbix_proxy_apt_cache_valid_time: 3600
+zabbix_proxy_packages: 
+  - zabbix-proxy-sqlite3
+zabbix_proxy_config_frequency: 10
+zabbix_proxy_data_sender_frequency: 1
+zabbix_proxy_buffer_mode: disk
+zabbix_proxy_memory_buffer_age: 0
+zabbix_proxy_memory_buffer_size: 0
+zabbix_proxy_offline_buffer: 1
+zabbix_proxy_timeout: 3

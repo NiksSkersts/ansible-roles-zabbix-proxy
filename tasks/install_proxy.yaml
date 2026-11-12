@@ -1,0 +1,22 @@
+---
+- name: Install Zabbix proxy and supporting packages
+  notify: Enable Zabbix proxy
+  ansible.builtin.apt:
+    name: '{{ zabbix_proxy_packages }}'
+    state: present
+    update_cache: true
+    cache_valid_time: '{{ zabbix_proxy_apt_cache_valid_time }}'
+
+- name: Create Zabbix configuration and data directories
+  ansible.builtin.file:
+    path: '{{ item.path }}'
+    state: directory
+    owner: '{{ item.owner }}'
+    group: zabbix
+    mode: '0750'
+  loop:
+    - { path: /etc/zabbix, owner: root }
+    - { path: /etc/zabbix/zabbix_proxy.d, owner: root }
+    - { path: /var/lib/zabbix, owner: zabbix }
+    - { path: /var/log/zabbix, owner: zabbix }
+    - { path: /run/zabbix, owner: zabbix }
