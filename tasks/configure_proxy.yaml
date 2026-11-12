@@ -3,8 +3,8 @@
   no_log: true
   notify: Restart Zabbix proxy
   ansible.builtin.copy:
-    content: '{{ zabbix_agent_tlspsk_secret }}'
-    dest: '{{ zabbix_agent_tlspskfile }}'
+    content: '{{ zabbix_proxy_tlspsk_secret }}'
+    dest: '{{ zabbix_proxy_tlspskfile }}'
     owner: root
     group: zabbix
     mode: '0640'

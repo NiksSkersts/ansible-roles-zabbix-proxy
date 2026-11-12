@@ -28,15 +28,15 @@
   become: false
   tags: always
   no_log: true
-  fail_msg: Set the Zabbix proxy PSK secret, absolute PSK file path, and PSK identity.
   ansible.builtin.assert:
+    fail_msg: Set the Zabbix proxy PSK secret, absolute PSK file path, and PSK identity.
     that:
-      - zabbix_agent_tlspsk_secret is defined
-      - zabbix_agent_tlspsk_secret is string
-      - zabbix_agent_tlspsk_secret is match('^(?:[0-9a-fA-F]{2}){16,256}$')
-      - zabbix_agent_tlspskfile is defined
-      - zabbix_agent_tlspskfile is string
-      - zabbix_agent_tlspskfile is match('^/.*[^/]$')
-      - zabbix_agent_tlspskidentity is defined
-      - zabbix_agent_tlspskidentity is string
-      - zabbix_agent_tlspskidentity | length > 0
+      - zabbix_proxy_tlspsk_secret is defined
+      - zabbix_proxy_tlspsk_secret is string
+      - zabbix_proxy_tlspsk_secret is match('^(?:[0-9a-fA-F]{2}){16,256}$')
+      - zabbix_proxy_tlspskfile is defined
+      - zabbix_proxy_tlspskfile is string
+      - zabbix_proxy_tlspskfile is match('^/.*[^/]$')
+      - zabbix_proxy_tlspskidentity is defined
+      - zabbix_proxy_tlspskidentity is string
+      - zabbix_proxy_tlspskidentity | length > 0

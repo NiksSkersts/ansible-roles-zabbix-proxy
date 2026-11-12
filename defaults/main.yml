@@ -1,6 +1,6 @@
 ---
 zabbix_monitor_endpoint: 127.0.0.1
-zabbix_agent_tlspsk_secret: ''
+zabbix_proxy_tlspsk_secret: ''
 zabbix_proxy_tlspskfile: /etc/zabbix/zabbix_proxy.psk
 zabbix_proxy_tlspskidentity: zabbix-proxy
 zabbix_proxy_apt_cache_valid_time: 3600
