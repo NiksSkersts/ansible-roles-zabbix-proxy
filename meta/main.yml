@@ -1,0 +1,23 @@
+---
+galaxy_info:
+  role_name: zabbix_proxy
+  namespace: niksskersts
+  author: Niks Šķērsts
+  description: Install and configure Zabbix proxy with SQLite3.
+  license: MIT
+  min_ansible_version: "2.15"
+  platforms:
+    - name: Debian
+      versions:
+        - trixie
+    - name: Ubuntu
+      versions:
+        - jammy
+        - noble
+        - resolute
+  galaxy_tags:
+    - zabbix
+    - monitoring
+    - proxy
+dependencies:
+  - role: zabbix-release
